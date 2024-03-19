@@ -11,4 +11,4 @@
 void warning(const char *fmt, ...);
 void error_exit(const char *fmt, ...);
 
-#endif
+#endif //ERROR_H
