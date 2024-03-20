@@ -90,22 +90,34 @@ int main(int argc, char *argv[]){
             case 6: 
                 if (c == '"'){
                     stav = 0;
-                    putchar('"');
-                } else {
-                    putchar(c);
-                }
+                } else if(c == '\\'){
+                    stav = 7;
+                } 
+                
+                putchar(c);
                 break;
 
-            case 7: 
+            case 7:
+                stav = 6;
+                putchar(c);
+                break;
+
+            case 8: 
                 if (c == '\''){
                     stav = 0;
-                    putchar('\'');
-                } else {
-                    putchar(c);
-                }
+                } else if(c == '\\'){
+                    stav = 9;
+                } 
+
+                putchar(c);
+                break;
+
+            case 9:
+                stav = 8;
+                putchar(c);
                 break;
         
-        }  //TODO: prerobit automat, zabudol som na \' a \" v stringoch
+        }
     } 
     if(stav!=0) {
         fprintf(stderr, "Error\n"); //TODO: pouzit error_exit

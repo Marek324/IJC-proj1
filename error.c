@@ -32,4 +32,5 @@ void error_exit(const char *fmt, ...) {
     exit(1);
 }
 
+//TODO: nakoniec vymazat tento comment
 //sablona na volanie v zadani
