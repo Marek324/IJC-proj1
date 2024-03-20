@@ -28,7 +28,7 @@ int main(int argc, char *argv[]){
     int stav = 0;
     int c;
 
-    while ((c = getchar()) != EOF) {
+    while ((c = fgetc(in_stream)) != EOF) {
         switch(stav) {
             
             case 0: 
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]){
                     stav = 6; 
                     putchar(c); 
                 } else if (c == '\''){
-                    stav = 7;
+                    stav = 8;
                     putchar(c);
                 } else {
                     putchar(c);

@@ -1,1 +1,10 @@
-no-comment-test.c
+!bitset.h
+!eratosthenes.c
+!error.c
+!error.h
+!Makefile
+!no-comment.c
+!primes.c
+!README.md
+!.gitignore
+*
