@@ -1,9 +1,7 @@
-/*
-*   error.h
-*   Marek Hric 
-*   259715
-*   xhricma00
-*/
+// error.h
+// Řešení IJC-DU1, příklad b), 19.3.2024
+// Autor: Marek Hric, FIT
+// Přeloženo: gcc 13.2.0
 
 #ifndef ERROR_H
 #define ERROR_H

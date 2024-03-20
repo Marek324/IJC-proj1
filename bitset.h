@@ -1,9 +1,7 @@
-/*
-*   bitset.h
-*   Marek Hric //TODO: opravit headers podla zadania
-*   259715
-*   xhricma00
-*/
+// bitset.h
+// Řešení IJC-DU1, příklad a), 20.3.2024
+// Autor: Marek Hric, FIT
+// Přeloženo: gcc 13.2.0
 
 #ifndef BITSET_H_
 #define BITSET_H_

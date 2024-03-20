@@ -1,8 +1,6 @@
-/*
-*   eratosthenes.c
-*   Marek Hric 
-*   259715
-*   xhricma00
-*/
+// erastothenes.c
+// Řešení IJC-DU1, příklad a), 20.3.2024
+// Autor: Marek Hric, FIT
+// Přeloženo: gcc 13.2.0
 
 #include "bitset.h"
