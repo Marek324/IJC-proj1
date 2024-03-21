@@ -24,11 +24,7 @@ int main(int argc, char *argv[])
     {
         in_stream = fopen(argv[1], "r");
 
-        if (in_stream == NULL)
-        {
-            fprintf(stderr, "Error: file can't be open"); // TODO: pouzit error_exit z error.h
-            return 1;
-        }
+        if (in_stream == NULL) error_exit("File not readable");
     }
 
     int stav = 0;
@@ -142,20 +138,17 @@ int main(int argc, char *argv[])
             {
                 stav = 9;
             }
-
             putchar(c);
             break;
-
+        
         case 9:
             stav = 8;
             putchar(c);
             break;
         }
     }
-    if (stav != 0)
-    {
-        fprintf(stderr, "Error\n"); // TODO: pouzit error_exit
-        return 1;
-    }
+
+    if (stav != 0) error_exit("");
+
     return 0;
 }

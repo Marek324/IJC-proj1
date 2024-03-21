@@ -14,7 +14,6 @@ void warning(const char *fmt, ...)
 
     fprintf(stderr, "Warning: ");
     vfprintf(stderr, fmt, args);
-    fprintf(stderr, "\n");
 
     va_end(args);
 }
@@ -26,14 +25,8 @@ void error_exit(const char *fmt, ...)
 
     fprintf(stderr, "Error: ");
     vfprintf(stderr, fmt, args);
-    fprintf(stderr, "\n");
 
     va_end(args);
 
     exit(1);
 }
-
-// TODO: pravdepodobne treba prerobit vypisovanie variadickych kokotin
-
-// TODO: nakoniec vymazat tento comment
-// sablona na volanie v zadani
