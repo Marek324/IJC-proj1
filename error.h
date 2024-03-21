@@ -9,4 +9,4 @@
 void warning(const char *fmt, ...);
 void error_exit(const char *fmt, ...);
 
-#endif //ERROR_H
+#endif // ERROR_H
