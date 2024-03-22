@@ -1,4 +1,5 @@
 !bitset.h
+!bitset.c
 !eratosthenes.c
 !error.c
 !error.h
