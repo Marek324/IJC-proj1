@@ -15,7 +15,7 @@
 
 typedef unsigned long *bitset_t;
 typedef unsigned long bitset_index_t;
-#define ULONG_SIZE_BIT (sizeof(unsigned long) * CHAR_BIT)
+#define ULONG_SIZE_BIT (sizeof(unsigned long) * 8)
 
 // void bitset_create(bitset_t **jmeno_pole, unsigned velikost);
 // void bitset_alloc(bitset_t **jmeno_pole, unsigned velikost);

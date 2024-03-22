@@ -1,11 +1,3 @@
-!bitset.h
-!bitset.c
-!eratosthenes.c
-!error.c
-!error.h
-!Makefile
-!no-comment.c
-!primes.c
-!README.md
-!.gitignore
-*
+*.txt
+*.o
+no-comment
