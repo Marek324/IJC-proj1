@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    if (stav != 0) error_exit("");
+    if (stav >=6 && stav <= 9) error_exit("Invalid input");
 
     return 0;
 }
