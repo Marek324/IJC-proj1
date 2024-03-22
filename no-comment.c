@@ -24,7 +24,8 @@ int main(int argc, char *argv[])
     {
         in_stream = fopen(argv[1], "r");
 
-        if (in_stream == NULL) error_exit("File not readable");
+        if (in_stream == NULL)
+            error_exit("File not readable");
     }
 
     int stav = 0;
@@ -140,7 +141,7 @@ int main(int argc, char *argv[])
             }
             putchar(c);
             break;
-        
+
         case 9:
             stav = 8;
             putchar(c);
@@ -148,7 +149,8 @@ int main(int argc, char *argv[])
         }
     }
 
-    if (stav >=6 && stav <= 9) error_exit("Invalid input");
+    if (stav >= 6 && stav <= 9)
+        error_exit("Invalid input");
 
     return 0;
 }
