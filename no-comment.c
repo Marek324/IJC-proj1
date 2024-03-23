@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
 {
 
     if (argc > MAX_ARGS)
-        return 0;
+        return 1;
 
     FILE *in_stream;
 

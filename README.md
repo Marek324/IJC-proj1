@@ -1,3 +1,4 @@
 TODO poznamky vo filoch:
-    > no-comment.c
+    > bitset.h
+    > bitset.c
 https://www.youtube.com/watch?v=OjNpRbNdR7E
