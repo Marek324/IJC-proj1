@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include "error.h"
+#include "error.h" //TODO: implementovat
 
 typedef unsigned long *bitset_t;
 typedef unsigned long bitset_index_t;
