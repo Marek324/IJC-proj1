@@ -51,7 +51,9 @@ inline void bitset_fill(bitset_t *jmeno_pole, bool bool_vyraz)
 }
 
 inline void bitset_setbit(bitset_t *jmeno_pole, bitset_index_t index, bool bool_vyraz)
-{ // bude treba skontrolovat ci index nepresahuje velkost, aj macro
+{
+    if (index > *jmeno_pole[0])
+        error_exit("bitset_setbit: index out of bounds\n");
     bitset_index_t cluster = (index % ULONG_SIZE_BIT) + 1;
     index -= (cluster - 1) * ULONG_SIZE_BIT;
     unsigned long pow = 2 << index;
@@ -64,7 +66,9 @@ inline void bitset_setbit(bitset_t *jmeno_pole, bitset_index_t index, bool bool_
 }
 
 inline bool bitset_getbit(bitset_t *jmeno_pole, bitset_index_t index)
-{ // bude treba skontrolovat ci index nepresahuje velkost, aj macro
+{
+    if (index > *jmeno_pole[0])
+        error_exit("bitset_setbit: index out of bounds\n");
     bitset_index_t cluster = (index % ULONG_SIZE_BIT) + 1;
     index -= (cluster - 1) * ULONG_SIZE_BIT;
     unsigned long tmp = *jmeno_pole[cluster];
@@ -105,6 +109,8 @@ inline bool bitset_getbit(bitset_t *jmeno_pole, bitset_index_t index)
 #define bitset_setbit(jmeno_pole, index, bool_vyraz)           \
     do                                                         \
     {                                                          \
+        if (index > jmeno_pole[0])                             \
+            error_exit("bitset_setbit: index out bounds\n");   \
         bitset_index_t cluster = (index % ULONG_SIZE_BIT) + 1; \
         index -= (cluster - 1) * ULONG_SIZE_BIT;               \
         unsigned long pow = 2 << index;                        \
