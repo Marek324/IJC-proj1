@@ -20,7 +20,7 @@ typedef unsigned long bitset_index_t;
 
 #define bitset_create(jmeno_pole, velikost)               \
     static_assert(velikost > 0 && velikost <= ULONG_MAX); \
-    bitset_t jmeno_pole[(velikost / ULONG_SIZE_BIT) + 1 + (velikost % ULONG_SIZE_BIT == 0 ? 0 : 1)] = {velikost}; // pravdepodobne kokotina, bude treba prepocitat
+    jmeno_pole[(velikost / ULONG_SIZE_BIT) + 1 + (velikost % ULONG_SIZE_BIT == 0 ? 0 : 1)] = {velikost};
 
 #define bitset_alloc(jmeno_pole, velikost)                                                                                        \
     assert(velikost > 0 && velikost <= ULONG_MAX);                                                                                \
@@ -61,7 +61,7 @@ inline void bitset_setbit(bitset_t *jmeno_pole, bitset_index_t index, bool bool_
     *jmeno_pole[cluster] &= mask;
     if (bool_vyraz)
     {
-        *jmeno_pole[cluster] + pow;
+        *jmeno_pole[cluster] += pow;
     }
 }
 
@@ -106,24 +106,25 @@ inline bool bitset_getbit(bitset_t *jmeno_pole, bitset_index_t index)
         }                                                                              \
     } while (0)
 
-#define bitset_setbit(jmeno_pole, index, bool_vyraz)           \
-    do                                                         \
-    {                                                          \
-        if (index > jmeno_pole[0])                             \
-            error_exit("bitset_setbit: index out bounds\n");   \
-        bitset_index_t cluster = (index % ULONG_SIZE_BIT) + 1; \
-        index -= (cluster - 1) * ULONG_SIZE_BIT;               \
-        unsigned long pow = 2 << index;                        \
-        unsigned long mask = ULONG_MAX - pow;                  \
-        *jmeno_pole[cluster] &= mask;                          \
-        if (bool_vyraz)                                        \
-        {                                                      \
-            *jmeno_pole[cluster] + pow;                        \
-        }                                                      \
-    }
+#define bitset_setbit(jmeno_pole, index, bool_vyraz)                                                                          \
+    do                                                                                                                        \
+    {                                                                                                                         \
+        if (index > jmeno_pole[0] || index < 0)                                                                               \
+            error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)index, (unsigned long)*jmeno_pole[0]); \
+        bitset_index_t cluster = (index % ULONG_SIZE_BIT) + 1;                                                                \
+        bitset_index_t i = index;                                                                                             \
+        i -= (cluster - 1) * ULONG_SIZE_BIT;                                                                                  \
+        unsigned long pow = 2 << i;                                                                                           \
+        unsigned long mask = ULONG_MAX - pow;                                                                                 \
+        *jmeno_pole[cluster] &= mask;                                                                                         \
+        if (bool_vyraz)                                                                                                       \
+        {                                                                                                                     \
+            *jmeno_pole[cluster] + pow;                                                                                       \
+        }                                                                                                                     \
+    } while (0)
 
 #define bitset_getbit(jmeno_pole, index) \
-    (*jmeno_pole[(index % ULONG_SIZE_BIT) + 1] & (2 << index)) >> ((index % ULONG_SIZE_BIT) * ULONG_SIZE_BIT)
+    (index <= *jmeno_pole[0]) ? ((*jmeno_pole[(index % ULONG_SIZE_BIT) + 1] & (2 << index)) >> ((index % ULONG_SIZE_BIT) * ULONG_SIZE_BIT)) : error_exit("bitset_set: Index %lu mimo rozsah 0..%lu\n", (unsigned long)index, (unsigned long)*jmeno_pole[0])
 
 #endif // USE_INLINE
 
