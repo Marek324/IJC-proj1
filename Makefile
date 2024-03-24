@@ -4,40 +4,28 @@
 # Přeloženo: gcc 13.2.0
 
 CC = gcc
-CFLAGS = -g -std=c11 -pedantic -Wall -Wextra
+CFLAGS = -g -std=c11 -pedantic -Wall -Wextra -O2 -fsanitize=address
+LDLIBS = -lm -fsanitize=address
 
-all: no-comment #primes primes-i
+.PHONY: all run clean
 
-#macros
-bitset.o: bitset.h bitset.c error.h
-	$(CC) $(CFLAGS) -c -o bitset.o bitset.c
+all: no-comment primes primes-i
 
-# primes: error.o bitset.o
-# 	$(CC) $(CFLAGS) -o primes error.o bitset.o
+primes: primes.c error.o eratosthenes.o eratosthenes.h
 
-#inline functions
-bitset-i.o: bitset.h bitset.c error.h
-	$(CC) $(CFLAGS) -DUSE_INLINE -c -o bitset-i.o bitset.c
+primes-i: primes-i.o eratosthenes-i.o error.o bitset-i.o
 
-# primes-i: error.o bitset-i.o
-# 	$(CC) $(CFLAGS) -DUSE_INLINE -o primes error.o bitset.o
+%-i.o: %.c
+	$(CC) $(CFLAGS) -DUSE_INLINE -c $< -o $@
 
-no-comment: error.o no-comment.o
-	$(CC) $(CFLAGS) -o no-comment no-comment.o error.o
-
-error.o: error.h error.c
-	$(CC) $(CFLAGS) -c -o error.o error.c
-
-no-comment.o: no-comment.c error.h
-	$(CC) $(CFLAGS) -c -o no-comment.o no-comment.c
+no-comment: no-comment.o error.o error.h
 
 clean:
-	rm -f *.o no-comment
+	rm -f *.o no-comment primes primes-i
 
 run: primes primes-i
 	ulimit -s 82000 && ./primes
 	ulimit -s 82000 && ./primes-i
 	
-
 zip:
-	zip xhricma00 .zip *.c *.h Makefile
+	zip xhricma00.zip *.c *.h Makefile
