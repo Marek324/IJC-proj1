@@ -1,31 +1,43 @@
 # Makefile 
-# Řešení IJC-DU1, 20.3.2024
+# Řešení IJC-DU1, 24.3.2024
 # Autor: Marek Hric, FIT
 # Přeloženo: gcc 13.2.0
 
 CC = gcc
-CFLAGS = -g -std=c11 -pedantic -Wall -Wextra -O2 -fsanitize=address
-LDLIBS = -lm -fsanitize=address
+CFLAGS = -g -std=c11 -pedantic -Wall -Wextra -O2 
+LDLIBS = -lm 
 
 .PHONY: all run clean
 
 all: no-comment primes primes-i
 
-primes: primes.c error.o eratosthenes.o eratosthenes.h
+primes: primes.c eratosthenes.o error.o
+	$(CC) $(CFLAGS) -o primes primes.c eratosthenes.o error.o $(LDLIBS)
 
-primes-i: primes-i.o eratosthenes-i.o error.o bitset-i.o
+eratosthenes.o: eratosthenes.c bitset.h 
+	$(CC) $(CFLAGS) -c -o eratosthenes.o eratosthenes.c $(LDLIBS)
 
-%-i.o: %.c
-	$(CC) $(CFLAGS) -DUSE_INLINE -c $< -o $@
+primes-i: primes.c eratosthenes-i.o bitset-i.o error.o
+	$(CC) $(CFLAGS) -o primes-i primes.c eratosthenes-i.o error.o bitset-i.o $(LDLIBS)
 
-no-comment: no-comment.o error.o error.h
+eratosthenes-i.o: eratosthenes.c
+	$(CC) $(CFLAGS) -c -o eratosthenes-i.o eratosthenes.c $(LDLIBS)
+
+bitset-i.o : bitset.h bitset.c 
+	$(CC) $(CFLAGS) -c -DUSE_INLINE -o bitset-i.o bitset.c 
+
+no-comment: no-comment.c error.o error.h
+	$(CC) $(CFLAGS) -o no-comment no-comment.c error.o
+
+error.o: error.h error.c
+	$(CC) $(CFLAGS) -c -o error.o error.c
 
 clean:
 	rm -f *.o no-comment primes primes-i
 
 run: primes primes-i
-	ulimit -s 96000 && ./primes
-	ulimit -s 96000 && ./primes-i
+	ulimit -s 131072 && ./primes
+	ulimit -s 131072 && ./primes-i
 	
 zip:
 	zip xhricma00.zip *.c *.h Makefile
