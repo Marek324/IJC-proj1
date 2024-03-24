@@ -17,14 +17,13 @@ void Eratosthenes(bitset_t pole)
     bitset_index_t lim = sqrt(n);
     for (bitset_index_t i = 2; i <= lim; i++)
     {
-        printf("%lu: %s\n", i, (bitset_getbit(pole, i)) == true ? "true" : "false");
         if ((bitset_getbit(pole, i)) == false)
             continue;
         
 
-        for (bitset_index_t j = 2; (i * j) < n; j++)
+        for (bitset_index_t j = i*i; j < n; j += i)
         {
-            bitset_setbit(pole, (i * j), false);
+            bitset_setbit(pole, j, false);
         }
     }
 }

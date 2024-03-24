@@ -86,15 +86,15 @@ inline bool bitset_getbit(bitset_t jmeno_pole, bitset_index_t index)
 #define bitset_size(jmeno_pole) \
     jmeno_pole[0]
 
-#define bitset_fill(jmeno_pole, bool_vyraz)                                                                     \
-    do                                                                                                          \
-    {                                                                                                           \
-        unsigned long val = bool_vyraz ? ULONG_MAX : 0;                                                         \
-        unsigned long max_cluster = (jmeno_pole[0] / ULONG_MAX) + (jmeno_pole[0] % ULONG_MAX == 0 ? 0 : 1) + 1; \
-        for (bitset_index_t i = 1; i < max_cluster; i++)                                                        \
-        {                                                                                                       \
-            jmeno_pole[i] = val;                                                                                \
-        }                                                                                                       \
+#define bitset_fill(jmeno_pole, bool_vyraz)                                                                          \
+    do                                                                                                               \
+    {                                                                                                                \
+        unsigned long val = bool_vyraz ? ULONG_MAX : 0;                                                              \
+        unsigned long max_cluster = (jmeno_pole[0] / ULONG_SIZE_BIT)  + 1; \
+        for (bitset_index_t i = 1; i < max_cluster; i++)                                                             \
+        {                                                                                                            \
+            jmeno_pole[i] = val;                                                                                     \
+        }                                                                                                            \
     } while (0)
 
 #define bitset_setbit(jmeno_pole, index, bool_vyraz)                                                                         \
@@ -114,10 +114,10 @@ inline bool bitset_getbit(bitset_t jmeno_pole, bitset_index_t index)
         }                                                                                                                    \
     } while (0)
 
-#define bitset_getbit(jmeno_pole, index)                                       \
-    (index < jmeno_pole[0])                                                    \
-        ? ((jmeno_pole[(index / ULONG_SIZE_BIT) + 1] & (2 << index)) >> index) //nikdy nevrati true \ 
-        : (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)index, (unsigned long)jmeno_pole[0]), 0)
+#define bitset_getbit(jmeno_pole, index)                                                   \
+    (index < jmeno_pole[0])                                                                \
+        ? (((jmeno_pole[(index / ULONG_SIZE_BIT) + 1]) >> (index % ULONG_SIZE_BIT)) & 1UL) \
+        : (error_exit("bitset_getbit: Index %lu mimo rozsah 0..%lu\n", index, jmeno_pole[0]), 0)
 
 #endif // USE_INLINE
 

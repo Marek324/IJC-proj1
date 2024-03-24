@@ -5,18 +5,24 @@
 
 #include "bitset.h"
 #include "eratosthenes.h"
+#include <time.h>
+
+#define N 666000000UL
 
 int main()
 {
-    bitset_create(pole, 100);
+    clock_t start = clock();
+    bitset_create(pole, N);
+
     Eratosthenes(pole);
 
     int prims = 0;
     bitset_index_t primes[10] = {0};
 
-    for (bitset_index_t i = bitset_size(pole)-1; prims < 10; i--)
+    for (bitset_index_t i = bitset_size(pole) - 1; prims < 10; i--)
     {
-        if(bitset_getbit(pole, i) == true){
+        if (bitset_getbit(pole, i))
+        {
             primes[prims] = i;
             prims++;
         }
@@ -26,7 +32,7 @@ int main()
     {
         printf("%lu\n", primes[i]);
     }
-    
+    fprintf(stderr, "Time=%.3g\n", (double)(clock()-start)/CLOCKS_PER_SEC);
 
     return 0;
 }
