@@ -1,2 +1,1 @@
-makefile
-testing
+komentare

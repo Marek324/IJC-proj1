@@ -10,7 +10,6 @@
 
 int main(int argc, char *argv[])
 {
-
     if (argc > MAX_ARGS)
         return 1;
 
@@ -149,7 +148,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    if (stav >= 6 && stav <= 9)
+    if (stav != 0)
         error_exit("Invalid input\n");
 
     return 0;
