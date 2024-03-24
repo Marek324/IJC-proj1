@@ -44,7 +44,8 @@ inline unsigned long bitset_size(bitset_t jmeno_pole)
 inline void bitset_fill(bitset_t jmeno_pole, bool bool_vyraz)
 {
     unsigned long val = bool_vyraz ? ULONG_MAX : 0;
-    for (bitset_index_t i = 1; i < (((jmeno_pole[0]) * ULONG_SIZE_BIT) - 1); i++) // bude treba zaokruhlovat ten vypocet, aj macro
+    unsigned long max_cluster = (jmeno_pole[0] / ULONG_SIZE_BIT) + 1;
+    for (bitset_index_t i = 1; i < max_cluster; i++)
     {
         jmeno_pole[i] = val;
     }
@@ -53,10 +54,11 @@ inline void bitset_fill(bitset_t jmeno_pole, bool bool_vyraz)
 inline void bitset_setbit(bitset_t jmeno_pole, bitset_index_t index, bool bool_vyraz)
 {
     if (index >= jmeno_pole[0])
-        error_exit("bitset_setbit: index out of bounds\n");
-    bitset_index_t cluster = (index % ULONG_SIZE_BIT) + 1;
-    index -= (cluster - 1) * ULONG_SIZE_BIT;
-    unsigned long pow = 2 << index;
+        error_exit("bitset_setbit: Index %lu mimo rozsah 0..%lu\n", (unsigned long)index, (unsigned long)jmeno_pole[0]);
+    bitset_index_t cluster = (index / ULONG_SIZE_BIT) + 1;
+    bitset_index_t ix = index;
+    ix -= (cluster - 1) * ULONG_SIZE_BIT;
+    unsigned long pow = 1UL << ix;
     unsigned long mask = ULONG_MAX - pow;
     jmeno_pole[cluster] &= mask;
     if (bool_vyraz)
@@ -67,15 +69,9 @@ inline void bitset_setbit(bitset_t jmeno_pole, bitset_index_t index, bool bool_v
 
 inline bool bitset_getbit(bitset_t jmeno_pole, bitset_index_t index)
 {
-    if (index > jmeno_pole[0])
+    if (index >= jmeno_pole[0])
         error_exit("bitset_setbit: index out of bounds\n");
-    bitset_index_t cluster = (index % ULONG_SIZE_BIT) + 1;
-    index -= (cluster - 1) * ULONG_SIZE_BIT;
-    unsigned long tmp = jmeno_pole[cluster];
-    unsigned long mask = 2 << index;
-    tmp &= mask;
-    tmp >>= index;
-    return tmp;
+    return (((jmeno_pole[(index / ULONG_SIZE_BIT) + 1]) >> (index % ULONG_SIZE_BIT)) & 1UL);
 }
 
 #else
@@ -86,15 +82,15 @@ inline bool bitset_getbit(bitset_t jmeno_pole, bitset_index_t index)
 #define bitset_size(jmeno_pole) \
     jmeno_pole[0]
 
-#define bitset_fill(jmeno_pole, bool_vyraz)                                                                          \
-    do                                                                                                               \
-    {                                                                                                                \
-        unsigned long val = bool_vyraz ? ULONG_MAX : 0;                                                              \
-        unsigned long max_cluster = (jmeno_pole[0] / ULONG_SIZE_BIT)  + 1; \
-        for (bitset_index_t i = 1; i < max_cluster; i++)                                                             \
-        {                                                                                                            \
-            jmeno_pole[i] = val;                                                                                     \
-        }                                                                                                            \
+#define bitset_fill(jmeno_pole, bool_vyraz)                               \
+    do                                                                    \
+    {                                                                     \
+        unsigned long val = bool_vyraz ? ULONG_MAX : 0;                   \
+        unsigned long max_cluster = (jmeno_pole[0] / ULONG_SIZE_BIT) + 1; \
+        for (bitset_index_t i = 1; i < max_cluster; i++)                  \
+        {                                                                 \
+            jmeno_pole[i] = val;                                          \
+        }                                                                 \
     } while (0)
 
 #define bitset_setbit(jmeno_pole, index, bool_vyraz)                                                                         \

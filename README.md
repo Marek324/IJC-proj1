@@ -1,1 +1,2 @@
-prerobit inline funkcie podla makier
+makefile
+testing
