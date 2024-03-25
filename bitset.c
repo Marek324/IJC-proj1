@@ -2,6 +2,7 @@
 // Řešení IJC-DU1, příklad a), 22.3.2024
 // Autor: Marek Hric, FIT
 // Přeloženo: gcc 13.2.0
+// Deklaracia inline funkcii
 
 #ifdef USE_INLINE
 

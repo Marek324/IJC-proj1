@@ -2,6 +2,7 @@
 // Řešení IJC-DU1, příklad b), 20.3.2024
 // Autor: Marek Hric, FIT
 // Přeloženo: gcc 13.2.0
+// Program vymaze komentare podla C ISO standardu zo suboru alebo stdin
 
 #define MAX_ARGS 2
 
@@ -152,4 +153,4 @@ int main(int argc, char *argv[])
         error_exit("Invalid input\n");
 
     return 0;
-}
+} //TODO: fclose pridat

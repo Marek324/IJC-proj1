@@ -2,6 +2,7 @@
 // Řešení IJC-DU1, příklad a), 23.3.2024
 // Autor: Marek Hric, FIT
 // Přeloženo: gcc 13.2.0
+// Definicia Eratosthenes funckie
 
 #include "bitset.h"
 #include <math.h>

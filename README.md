@@ -1,1 +1,1 @@
-komentare
+HOTOVO

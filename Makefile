@@ -4,23 +4,23 @@
 # Přeloženo: gcc 13.2.0
 
 CC = gcc
-CFLAGS = -g -std=c11 -pedantic -Wall -Wextra -O2 
+CFLAGS = -g -std=c11 -pedantic -Wall -Wextra -O2
 LDLIBS = -lm 
 
-.PHONY: all run clean
+.PHONY: all run clean remake zip
 
-all: no-comment primes primes-i
+all: no-comment primes primes-i 
 
-primes: primes.c eratosthenes.o error.o
+primes: primes.c eratosthenes.o error.o error.h bitset.h 
 	$(CC) $(CFLAGS) -o primes primes.c eratosthenes.o error.o $(LDLIBS)
 
 eratosthenes.o: eratosthenes.c bitset.h 
 	$(CC) $(CFLAGS) -c -o eratosthenes.o eratosthenes.c $(LDLIBS)
 
-primes-i: primes.c eratosthenes-i.o bitset-i.o error.o
+primes-i: primes.c eratosthenes-i.o bitset-i.o eratosthenes.h error.o error.h bitset.h 
 	$(CC) $(CFLAGS) -o primes-i primes.c eratosthenes-i.o error.o bitset-i.o $(LDLIBS)
 
-eratosthenes-i.o: eratosthenes.c
+eratosthenes-i.o: eratosthenes.c bitset.h 
 	$(CC) $(CFLAGS) -c -o eratosthenes-i.o eratosthenes.c $(LDLIBS)
 
 bitset-i.o : bitset.h bitset.c 
@@ -29,15 +29,19 @@ bitset-i.o : bitset.h bitset.c
 no-comment: no-comment.c error.o error.h
 	$(CC) $(CFLAGS) -o no-comment no-comment.c error.o
 
-error.o: error.h error.c
+error.o: error.c
 	$(CC) $(CFLAGS) -c -o error.o error.c
 
 clean:
 	rm -f *.o no-comment primes primes-i
 
 run: primes primes-i
-	ulimit -s 131072 && ./primes
-	ulimit -s 131072 && ./primes-i
+	ulimit -s 85000 && ./primes
+	ulimit -s 85000 && ./primes-i
 	
 zip:
 	zip xhricma00.zip *.c *.h Makefile
+
+remake:
+	make clean
+	make
