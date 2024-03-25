@@ -153,4 +153,4 @@ int main(int argc, char *argv[])
         error_exit("Invalid input\n");
 
     return 0;
-} //TODO: fclose pridat
+} 

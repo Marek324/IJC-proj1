@@ -4,7 +4,7 @@
 # Přeloženo: gcc 13.2.0
 
 CC = gcc
-CFLAGS = -g -std=c11 -pedantic -Wall -Wextra -O2
+CFLAGS = -g -std=c11 -pedantic -Wall -Wextra
 LDLIBS = -lm 
 
 .PHONY: all run clean remake zip
@@ -41,7 +41,3 @@ run: primes primes-i
 	
 zip:
 	zip xhricma00.zip *.c *.h Makefile
-
-remake:
-	make clean
-	make
