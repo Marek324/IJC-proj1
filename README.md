@@ -1,6 +1,6 @@
 # Last 10 primes / Comment eraser
 
-Project was assigned in my C programming language course at FIT BUT. First part of the assignment was to make a program that prints out last 10 prime numbers before 666000000. Second part was to create a program that deletes C type comments from input.
+Project was assigned in my C programming language course at FIT BUT. First part of the assignment was to make a program that prints out last 10 prime numbers before 666000000. Second part was to create a program that deletes C type comments from input. Final evaluation: 15/15
 
 ## Last 10 primes
 
@@ -38,7 +38,6 @@ It reads input stream character by character and prints or doesn't print the cha
 ```
 make no-comment
 ```
-
 
 ### Usage
 
