@@ -7,7 +7,7 @@ CC = gcc
 CFLAGS = -g -std=c11 -pedantic -Wall -Wextra
 LDLIBS = -lm 
 
-.PHONY: all run clean remake zip
+.PHONY: all run clean zip
 
 all: no-comment primes primes-i 
 
